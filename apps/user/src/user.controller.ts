@@ -30,7 +30,6 @@ export class UserController {
 
   @Get('register-captcha')
   async captcha(@Query('address') address: string) {
-    console.log(address);
     const code = Math.random().toString().slice(2, 8);
     await this.redisService.set(`captcha_${address}`, code, 5 * 60);
 
