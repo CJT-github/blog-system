@@ -41,6 +41,12 @@
       ],
       "@app/common/*": [
         "libs/common/src/*"
+      ],
+      "@app/qiniu": [
+        "libs/qiniu/src"
+      ],
+      "@app/qiniu/*": [
+        "libs/qiniu/src/*"
       ]
     }
   }

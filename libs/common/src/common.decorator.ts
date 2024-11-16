@@ -10,6 +10,7 @@ export const RequireLogin = () => SetMetadata('require-login', true);
 export const UserInfo = createParamDecorator(
   (data: string, ctx: ExecutionContext) => {
     const request = ctx.switchToHttp().getRequest<Request>();
+    console.log(request.user);
     if (!request.user) {
       return null;
     }

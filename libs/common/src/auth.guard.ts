@@ -40,11 +40,15 @@ export class AuthGuard implements CanActivate {
       context.getHandler(),
     ]);
 
+    console.log(requireLogin);
+
     if (!requireLogin) {
       return true;
     }
 
     const authorization = request.headers.authorization;
+
+    console.log(request.headers, '22');
 
     if (!authorization) {
       throw new UnauthorizedException('用户未登录');

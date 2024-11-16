@@ -1,8 +1,14 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import {
+  HttpException,
+  HttpStatus,
+  Inject,
+  Injectable,
+  Logger,
+} from '@nestjs/common';
 import { createBlogDto } from './dto/create-blog.dto';
 import { PrismaService } from '@app/prisma';
 import { RedisService } from '@app/redis';
-import { Prisma } from '@prisma/client';
+import { createCategoryDto } from './dto/create-category.dto';
 
 @Injectable()
 export class BlogSystemService {
@@ -18,6 +24,65 @@ export class BlogSystemService {
     return 'Hello World!';
   }
 
+  //创建分类
+  async createCateGory(category: createCategoryDto) {
+    const cate = await this.prisma.category.findUnique({
+      where: {
+        key: category.key,
+      },
+    });
+
+    if (cate) {
+      throw new HttpException('分类已存在', HttpStatus.BAD_REQUEST);
+    }
+
+    try {
+      return await this.prisma.category.create({
+        data: {
+          key: category.key,
+          name: category.name,
+        },
+        select: {
+          key: true,
+          name: true,
+        },
+      });
+    } catch (error) {
+      this.logger.error(error, BlogSystemService);
+      return null;
+    }
+  }
+
+  //获取分类列表
+  async getCateGoryList(category: createCategoryDto) {
+    const cate = await this.prisma.category.findUnique({
+      where: {
+        key: category.key,
+      },
+    });
+
+    if (cate) {
+      throw new HttpException('分类已存在', HttpStatus.BAD_REQUEST);
+    }
+
+    try {
+      return await this.prisma.category.create({
+        data: {
+          key: category.key,
+          name: category.name,
+        },
+        select: {
+          key: true,
+          name: true,
+        },
+      });
+    } catch (error) {
+      this.logger.error(error, BlogSystemService);
+      return null;
+    }
+  }
+
+  //创建博客
   async createBlog(blog: createBlogDto, authorId: number) {
     try {
       return await this.prisma.blog.create({

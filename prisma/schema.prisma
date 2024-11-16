@@ -56,8 +56,11 @@ model Comment {
 
 model Category {
   id Int @id @default(autoincrement())
+  key String @unique
   name String @unique
   blogs BlogCategory[]
+  createTime DateTime @default(now())
+  updateTime DateTime @updatedAt
 }
 
 model BlogCategory {
