@@ -18,7 +18,7 @@ import * as path from 'path';
 import { createCategoryDto } from './dto/create-category.dto';
 
 @Controller('blog')
-export class AppController {
+export class AppController {npm
   @Inject(QiniuService)
   private qiniuService: QiniuService;
 
